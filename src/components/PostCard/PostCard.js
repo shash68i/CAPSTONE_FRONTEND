@@ -6,13 +6,6 @@ import LocationOnTwoToneIcon from "@mui/icons-material/LocationOnTwoTone";
 import "./PostCard.css";
 
 function PostCard() {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
   return (
     <div className="post-card">
       <div className="post-card__title">
