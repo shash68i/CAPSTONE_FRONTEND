@@ -12,8 +12,6 @@
 }
 
 .navbar {
-  margin: 0 auto;
-  width: 64%;
   font-size: 2rem;
   display: flex;
   justify-content: space-between;
@@ -46,5 +44,6 @@
 
 .nav-side {
   display: flex;
-  gap: 3rem;
+  align-items: center;
+  gap: 2.5rem;
 }

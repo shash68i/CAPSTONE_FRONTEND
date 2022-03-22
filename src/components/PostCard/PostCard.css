@@ -1,0 +1,27 @@
+.post-card {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 2px solid grey;
+  display: flex;
+  align-items: center;
+}
+
+.post-card__title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-location {
+  display: flex;
+  align-items: center;
+}
+
+.postcard-images {
+  width: 100%;
+}
+
+/* .postcard-images img {
+  width: 100%;
+  object-fit: cover;
+} */
