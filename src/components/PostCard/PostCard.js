@@ -2,10 +2,7 @@ import React from "react";
 
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import LocationOnTwoToneIcon from "@mui/icons-material/LocationOnTwoTone";
-import Slider from "react-slick";
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import "./PostCard.css";
 
 function PostCard() {
@@ -43,14 +40,7 @@ function PostCard() {
         </div>
       </div>
 
-      <div className="post-card__images">
-        <Slider {...settings}>
-          <img src="https://picsum.photos/1000" alt="Post Images" />
-          <img src="https://picsum.photos/1000" alt="Post Images" />
-          <img src="https://picsum.photos/1000" alt="Post Images" />
-          <img src="https://picsum.photos/1000" alt="Post Images" />
-        </Slider>
-      </div>
+      <div className="post-card__images"></div>
 
       <div className="post-card__text"></div>
 
