@@ -6,7 +6,7 @@ import "./Home.css";
 
 export default function Home() {
   return (
-    <div className="posts-container">
+    <div className="container posts-container">
       <div className="card-section">
         <PostCard />
       </div>
