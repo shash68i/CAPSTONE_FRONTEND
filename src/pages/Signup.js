@@ -1,10 +1,23 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import FormImage from "../assets/images/form_image.jpg";
+import { authActions } from "../slices/authSlice";
 import "./LoginSignup.css";
 
 function Signup() {
+
+  const dispatch = useDispatch();
+
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    dispatch(authActions.login());
+  };
+
+
   return (
     <div className="auth-container">
       <div className="auth-image-section">
@@ -44,7 +57,7 @@ function Signup() {
             placeholder="Password"
           />
 
-          <button className="auth-button">Create Account</button>
+          <button onClick={handleRegister} className="auth-button">Create Account</button>
           <div className="auth-footer">
             Already have an account?{" "}
             <span>

@@ -65,7 +65,7 @@
 
 .fullname-group {
   display: flex;
-  gap: 1rem;
+  gap: 2.5rem;
 }
 
 .auth-button {
