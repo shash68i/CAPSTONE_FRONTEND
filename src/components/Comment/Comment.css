@@ -1,0 +1,42 @@
+.comment-card {
+  width: 100%;
+  border-bottom: 1px solid rgb(239, 243, 244);
+  padding: 1rem 0;
+  margin: 1rem 0;
+  background-color: #f7f9f9;
+  border-radius: 1rem;
+}
+
+.comment__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.comment__profile-pic {
+  width: 3.5rem;
+  height: 3.5rem;
+  clip-path: circle(45%);
+  shape-outside: circle(45%);
+}
+
+.comment__profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.comment__text {
+  width: 100%;
+  font-size: 1.4rem;
+  word-spacing: 0.1rem;
+  color: rgb(15, 20, 25);
+}
+
+.comment__username,
+.comment__timestamp {
+  color: rgb(83, 100, 113);
+}
