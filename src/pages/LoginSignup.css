@@ -40,11 +40,15 @@
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
 
-.form-fields > input {
+.form-field {
   width: 100%;
 }
 
-.form-fields input {
+.form-field input {
+  width: 100%;
+}
+
+.form-field input {
   height: 4rem;
   border: none;
   /* border-bottom: 1px solid #b3b3b3; */
@@ -53,11 +57,11 @@
   background-color: #ffffff;
 }
 
-.form-fields input:focus {
+.form-field input:focus {
   box-shadow: #9775fa 0px 1.5px 0px;
 }
 
-.form-fields input::-webkit-input-placeholder {
+.form-field input::-webkit-input-placeholder {
   font-family: "Inter", cursive;
   font-size: 1.5rem;
   opacity: 0.5;

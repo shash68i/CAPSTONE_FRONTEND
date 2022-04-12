@@ -1,27 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
+import * as Yup from "yup";
+
 import FormImage from "../assets/images/form_image.jpg";
-import { authActions } from "../slices/authSlice";
+import { authActions, loadUser, loginUser } from "../slices/authSlice";
 import "./LoginSignup.css";
+
+const initialValues = {
+  email: "",
+  password: "",
+};
+
+const loginSchema = Yup.object({
+  email: Yup.string()
+    .email("Must be a valid mail")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password too short")
+    .required("Password is Required!"),
+});
 
 function Login() {
   const dispatch = useDispatch(); // For dispatching the actions
-  const navigate = useNavigate(); // React Router v6-> Navigate Hook
+
+  const [loginData, setLoginData] = useState(initialValues);
 
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  const token = useSelector((state) => state.auth.token);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (!isAuth) {
-      dispatch(authActions.login());
-    }
+  const handleLogin = (values, { setSubmitting }) => {
+    setSubmitting(false);
+    console.log("Submitted Details", loginData);
+    dispatch(loginUser(JSON.stringify(values)));
+    dispatch(loadUser());
+
+    console.log();
   };
 
   if (isAuth) {
-    navigate('/');
+    return <Navigate to="/" />;
   }
 
   return (
@@ -30,27 +51,40 @@ function Login() {
         <img src={FormImage} alt="Login Form" />
       </div>
       <div className="form-section">
-        <form className="form-fields" action="">
-          <div className="form-heading">Log In</div>
-          <input type="email" id="email" name="email" placeholder="Email" />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-          />
+        <Formik
+          initialValues={loginData}
+          validationSchema={loginSchema}
+          enableReinitialize={true}
+          onSubmit={handleLogin}
+        >
+          <Form className="form-fields">
+            <div className="form-heading">Log In</div>
+            <div className="form-field">
+              <Field type="email" id="email" name="email" placeholder="Email" />
+              <ErrorMessage component="div" name="email" />
+            </div>
+            <div className="form-field">
+              <Field
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+              />
+              <ErrorMessage component="div" name="password" />
+            </div>
 
-          <button className="auth-button" onClick={handleLogin}>
-            Log In
-          </button>
-          <div className="auth-footer">
-            Don't have an account?{" "}
-            <span>
-              {" "}
-              <NavLink to="/register">Register</NavLink>
-            </span>
-          </div>
-        </form>
+            <button type="submit" className="auth-button">
+              Log In
+            </button>
+            <div className="auth-footer">
+              Don't have an account?{" "}
+              <span>
+                {" "}
+                <NavLink to="/register">Register</NavLink>
+              </span>
+            </div>
+          </Form>
+        </Formik>
       </div>
     </div>
   );
