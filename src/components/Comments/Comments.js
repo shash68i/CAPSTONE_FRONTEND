@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 
 import {
   FavoriteBorderOutlined,
@@ -9,35 +9,50 @@ import {
 import Comment from "../Comment/Comment";
 
 import "./Comments.css";
+import { addComment } from "../../slices/postSlice";
+import { useDispatch } from "react-redux";
 
-const Comments = () => {
+const Comments = ({ comments, postId }) => {
+  const dispatch = useDispatch();
+  const [text, setText] = useState("");
+
+  const handleAddComment = (e) => {
+    e.preventDefault();
+    const commentData = { text };
+    dispatch(addComment({postId, commentData}));
+    setText("");
+  };
+
   return (
     <div className="comments-card">
-      <div className="post-comment">
+      <form className="post-comment-form" onSubmit={handleAddComment}>
         <span className="profile-pic">
           <img src="https://picsum.photos/200/300" alt="Profile Pic" />
           {/* <AccountCircleTwoTone sx={{ fontSize: "4.5rem", color: "#4d4d4d" }} /> */}
         </span>
-        <input
+        <textarea
           className="post-comment-input"
+          row="3"
           type="text"
+          onChange={(e) => setText(e.target.value)}
           placeholder="Add a comment..."
+          value={text}
+          required
         />
-        {/* <FavoriteBorderOutlined sx={{ fontSize: "2.7rem", margin: "1rem" }} /> */}
         <span className="post-comment-btn">
-          <SendRounded
-            sx={{ fontSize: "2.4rem", margin: "0.4rem", fontWeight: "400" }}
-          />
+          <button style={{ border: "none", cursor: "pointer" }} type="submit">
+            <SendRounded
+              sx={{ fontSize: "2.4rem", margin: "0.4rem", fontWeight: "400" }}
+            />
+          </button>
         </span>
-      </div>
+      </form>
 
       <div className="comments">
         <div className="comments__title">Comments</div>
-
-        <Comment />
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => (
+          <Comment postId={postId} comment={comment} key={comment._id} />
+        ))}
       </div>
     </div>
   );
