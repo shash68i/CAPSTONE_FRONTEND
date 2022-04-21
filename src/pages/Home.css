@@ -11,5 +11,6 @@
 }
 
 .suggest-section {
-  background-color: whitesmoke;
+  min-height: 60rem;
+  margin-top: 1rem;
 }
