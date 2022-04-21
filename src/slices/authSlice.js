@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Navigate } from "react-router";
+import { toast } from "react-toastify";
 import api from "../utils/api";
+import setAuthToken from "../utils/setAuthToken";
 
 const initialAuthState = {
   token: localStorage.getItem("token"),
@@ -9,22 +10,23 @@ const initialAuthState = {
   user: null,
 };
 
-// Creating Register User Thunk
+// Register User Thunk
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (signupData, getState) => {
     const response = await api.post("/users", signupData);
-    localStorage.setItem("token", response.data.token);
+    
     return response.data;
   }
 );
 
-// Creating Login User Thunk
+// Login User Thunk
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (loginData, getState, dispatch) => {
     const response = await api.post("/auth", loginData);
     localStorage.setItem("token", response.data.token);
+    setAuthToken(localStorage.token);
     return response.data;
   }
 );
@@ -47,21 +49,20 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    [registerUser.pending]: (state) => {
-      state.loading = true;
-    },
     [registerUser.fulfilled]: (state, { payload }) => {
       state.token = payload;
       state.loading = false;
       state.isAuthenticated = true;
     },
-    [loginUser.pending]: (state) => {
-      state.loading = true;
-    },
     [loginUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.isAuthenticated = true;
       state.token = payload;
+      // console.log(payload, "payload");
+    },
+    [loginUser.rejected]:(state, { payload }) => {
+      state.loading = false;
+      toast.error("Invalid credentials");
       // console.log(payload, "payload");
     },
     [loadUser.fulfilled]: (state, { payload }) => {
@@ -71,6 +72,9 @@ const authSlice = createSlice({
       console.log(payload, "payload");
 
     },
+    [loadUser.rejected]: (state, { payload }) => {
+      state.loading=false
+    }
   },
 });
 
