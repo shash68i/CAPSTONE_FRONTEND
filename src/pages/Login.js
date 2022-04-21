@@ -55,6 +55,7 @@ function Login() {
           initialValues={loginData}
           validationSchema={loginSchema}
           enableReinitialize={true}
+          validateOnBlur={false}
           onSubmit={handleLogin}
         >
           <Form className="form-fields">

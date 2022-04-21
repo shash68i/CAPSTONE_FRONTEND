@@ -44,7 +44,6 @@ function Signup() {
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
   const handleRegister = (values, { setSubmitting }) => {
-    console.log("Submitted Details", signUpData);
     dispatch(registerUser(values));
     dispatch(loadUser());
   };
