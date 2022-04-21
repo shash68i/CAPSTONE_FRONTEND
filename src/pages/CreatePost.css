@@ -32,7 +32,7 @@
   align-items: center;
 }
 
-.edit-form-fields {
+.add-post-fields {
   width: 100%;
   background-color: #ffffff;
   display: flex;
@@ -43,11 +43,11 @@
   padding: 3rem;
 }
 
-.edit-form-fields > input {
+.add-post-fields > input {
   width: 100%;
 }
 
-.edit-form-fields input {
+.add-post-fields input {
   height: 4rem;
   border: none;
   /* border-bottom: 1px solid #b3b3b3; */
@@ -56,21 +56,21 @@
   background-color: #ffffff;
 }
 
-.edit-form-fields input:focus {
+.add-post-fields input:focus {
   box-shadow: #9775fa 0px 1.5px 0px;
 }
 
-.edit-form-fields input::-webkit-input-placeholder {
+.add-post-fields input::-webkit-input-placeholder {
   font-family: "Inter", cursive;
   font-size: 1.5rem;
   opacity: 0.5;
 }
 
-.edit-form-fields > textarea {
+.add-post-fields > textarea {
   width: 100%;
 }
 
-.edit-form-fields textarea {
+.add-post-fields textarea {
   resize: none;
   border: none;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
@@ -80,11 +80,11 @@
   background-color: #efefef;
 }
 
-/* .edit-form-fields textarea:focus {
+/* .add-post-fields textarea:focus {
   box-shadow: #9775fa 0px 1.5px 0px;
 } */
 
-.edit-form-fields input::-webkit-input-placeholder {
+.add-post-fields input::-webkit-input-placeholder {
   font-family: "Inter", cursive;
   font-size: 1.5rem;
   opacity: 0.5;
