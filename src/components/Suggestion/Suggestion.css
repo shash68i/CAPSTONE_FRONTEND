@@ -26,8 +26,13 @@
     /* box-shadow: rgba(0, 0, 0, 0.02) 0px 0px 0px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px; */
 }
 
+.suggest-location__item p::first-letter {
+    text-transform: capitalize;
+}
+
 .suggest-location__item:hover {
     background-color: #f7f9f9;
     cursor: pointer;
     text-decoration: dashed;
 }
+

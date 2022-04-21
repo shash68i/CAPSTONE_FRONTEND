@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   AccountCircleTwoTone,
@@ -12,8 +12,32 @@ import {
 import Carousel from "react-material-ui-carousel";
 
 import "./PostCard.css";
+import { NavLink, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { updateLikes } from "../../slices/postSlice";
 
-function PostCard() {
+function PostCard({ post }) {
+  const {
+    username,
+    first_name,
+    last_name,
+    location,
+    tags,
+    text,
+    images,
+    likes,
+    date,
+    user,
+    _id,
+  } = post;
+
+  const timestamp = new Date(date);
+
+  const dispatch = useDispatch();
+
+  const loggedInUser = useSelector((state) => state.auth.user);
+  const isLiked = likes.some((like) => loggedInUser?._id === like.user);
+
   return (
     <div className="post-card">
       <div className="post-card__title">
@@ -31,14 +55,21 @@ function PostCard() {
                 color: "#ea4335",
               }}
             />{" "}
-            Ranchi Jharkhand
+            {location}
           </div>
           <div className="user-details">
-            <span className="name">
-              <strong>Shashank Kumar</strong>{" "}
-            </span>
-            <span className="username">@shash68i </span>
-            <span className="timestamp">28 Jan</span>
+            <Link
+              to={`/users/${user}`}
+              state={{ first_name, last_name, username }}
+            >
+              <span className="name">
+                <strong>
+                  {first_name} {last_name}
+                </strong>{" "}
+              </span>
+            </Link>
+            <span className="username">@{username} </span>
+            <span className="timestamp">{timestamp.toDateString()}</span>
           </div>
         </div>
       </div>
@@ -49,6 +80,7 @@ function PostCard() {
           autoPlay={false}
           animation={"slide"}
           navButtonsAlwaysVisible={true}
+          cycleNavigation={false}
           indicatorContainerProps={{
             style: {
               position: "absolute",
@@ -72,25 +104,16 @@ function PostCard() {
             },
           }}
         >
-          <img src="https://picsum.photos/2080" alt="Post Images" />
-          <img src="https://picsum.photos/2010" alt="Post Images" />
-          <img src="https://picsum.photos/2000" alt="Post Images" />
-          <img src="https://picsum.photos/2020" alt="Post Images" />
+          {images.map((image, index) => (
+            <NavLink to={`/posts/${_id}`} key={index}>
+              <img src={image} alt="Post Images" />
+            </NavLink>
+          ))}
         </Carousel>
       </div>
 
       <div className="post-card__text">
-        <strong>Shashank Kumar</strong> Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. In metus vulputate eu scelerisque. <br />
-        <br />
-        Amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus. Neque
-        ornare aenean euismod elementum nisi. Sollicitudin tempor id eu nisl
-        nunc mi. Nibh mauris cursus mattis molestie a. Pellentesque pulvinar
-        pellentesque habitant morbi. Adipiscing elit duis tristique sollicitudin
-        nibh. Nibh nisl condimentum id venenatis a condimentum vitae sapien.
-        Interdum varius sit amet mattis vulputate enim. In ante metus dictum at
-        tempor.
+        {text}
         <div className="post-card__actions-info">
           <span>
             <FavoriteOutlined
@@ -104,22 +127,56 @@ function PostCard() {
           </span>
 
           <span>
-            <ModeCommentOutlined
-              sx={{ fontSize: "1.85rem", marginRight: "0.1rem" }}
-            />
-            21 comments
+            <NavLink to={`/posts/${_id}`}>
+              <ModeCommentOutlined
+                sx={{ fontSize: "1.85rem", marginRight: "0.1rem" }}
+              />
+              {post.comments.length} comments
+            </NavLink>
           </span>
         </div>
       </div>
 
       <div className="post-card__actions">
         <span className="action-items">
-          <FavoriteBorderOutlined sx={{ fontSize: "2.7rem", margin: "1rem" }} />
+          {isLiked ? (
+            <FavoriteOutlined
+              onClick={() => dispatch(updateLikes(_id))}
+              sx={{
+                width: "2em",
+                cursor: "pointer",
+                fontSize: "2.7rem",
+                margin: "1rem",
+                padding: "0 1rem",
+                color: "#ed4956",
+              }}
+            />
+          ) : (
+            <FavoriteBorderOutlined
+              onClick={() => dispatch(updateLikes(_id))}
+              sx={{
+                width: "2em",
+                cursor: "pointer",
+                fontSize: "2.7rem",
+                margin: "1rem",
+                padding: "0 1rem",
+              }}
+            />
+          )}
         </span>
         <span className="action-items">
-          <ModeCommentOutlined
-            sx={{ fontSize: "2.4rem", margin: "1rem", fontWeight: "400" }}
-          />
+          <NavLink to={`/posts/${_id}`}>
+            <ModeCommentOutlined
+              sx={{
+                width: "2em",
+                cursor: "pointer",
+                fontSize: "2.4rem",
+                margin: "1rem",
+                padding: "0 1rem",
+                fontWeight: "400",
+              }}
+            />
+          </NavLink>
         </span>
       </div>
 
