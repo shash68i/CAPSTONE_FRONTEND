@@ -30,11 +30,15 @@ function DetailPostCard() {
   const post = useSelector((state) => state.post.post);
 
   // const timestamp = new Date(post.date);
-  const nearbyLocations = locationsGroup
-    .find((locationGroup) => locationGroup.includes("Ranchi, Jharkhand"))
-    .filter((location) => location !== "Ranchi, Jharkhand");
+  const getNearbyLocations = () => {
+    console.log(post, "post")
+    if (post._id) {
+      return locationsGroup
+        .find((locationGroup) => locationGroup.includes(post.location))
+        ?.filter((location) => location !== post.location);
+    }
+  };
 
-  console.log(nearbyLocations, "post id");
 
   useEffect(() => {
     dispatch(getPost(id));
@@ -122,18 +126,7 @@ function DetailPostCard() {
           </div>
 
           <div className="post-card__text">
-            <strong>Shashank Kumar</strong> Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua. In metus vulputate eu scelerisque.{" "}
-            <br />
-            <br />
-            Amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus.
-            Neque ornare aenean euismod elementum nisi. Sollicitudin tempor id
-            eu nisl nunc mi. Nibh mauris cursus mattis molestie a. Pellentesque
-            pulvinar pellentesque habitant morbi. Adipiscing elit duis tristique
-            sollicitudin nibh. Nibh nisl condimentum id venenatis a condimentum
-            vitae sapien. Interdum varius sit amet mattis vulputate enim. In
-            ante metus dictum at tempor.
+            <strong>Shashank Kumar</strong> {post.text}
             <div className="post-card__actions-info">
               <span>
                 <FavoriteOutlined
@@ -175,7 +168,7 @@ function DetailPostCard() {
 
         <Comments comments={post.comments} postId={id} />
         <div className="nearby-location-section">
-          <NearbyLocation locationOptions={nearbyLocations} />
+          <NearbyLocation locationOptions={getNearbyLocations()} />
         </div>
       </Fragment>
     )

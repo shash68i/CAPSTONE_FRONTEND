@@ -1,13 +1,13 @@
 export const locationsGroup = [
   [
     "Mussoorie, Uttarakhand",
-    "Nainital,Uttarakhand",
-    "Rishikesh,Uttarakhand",
-    "Haridwar,Uttarakhand",
-    "Chakrata,Uttarakhand",
-    "Kedarnath,Uttarakhand",
-    "Harsil,Uttarakhand",
-    "Kausani,Uttarakhand",
+    "Nainital, Uttarakhand",
+    "Rishikesh, Uttarakhand",
+    "Haridwar, Uttarakhand",
+    "Chakrata, Uttarakhand",
+    "Kedarnath, Uttarakhand",
+    "Harsil, Uttarakhand",
+    "Kausani, Uttarakhand",
     "Almora, Uttarakhand",
     "Nanda Devi, Uttarakhand",
   ],
@@ -86,11 +86,11 @@ export const locationsGroup = [
     "Ranchi, Jharkhand",
   ],
   [
-    "Patna,Bihar",
-    "Nalanda,Bihar",
-    "Bodh Gaya,Bihar",
-    "Rajgir,Bihar",
-    "Begusarai,Bihar",
+    "Patna, Bihar",
+    "Nalanda, Bihar",
+    "Bodh Gaya, Bihar",
+    "Rajgir, Bihar",
+    "Begusarai, Bihar",
   ],
   [
     "Ayodhya, UP",
@@ -243,3 +243,8 @@ export const locationsGroup = [
 
   ["Imphal, Manipur", "Loktak Lake & Sendra Island, Manipur"],
 ];
+
+
+export const allLocations = locationsGroup.reduce((prev, current) => [...prev, ...current]);
+
+export const allLocationOptions = allLocations.map((location) => ({ label: location, value: location }));

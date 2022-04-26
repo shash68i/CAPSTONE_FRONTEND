@@ -15,8 +15,9 @@ import "./PostCard.css";
 import { NavLink, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLikes } from "../../slices/postSlice";
+import { updateMyLikes, updateUserLikes } from "../../slices/userSlice";
 
-function PostCard({ post }) {
+function PostCard({ post, type }) {
   const {
     username,
     first_name,
@@ -37,6 +38,16 @@ function PostCard({ post }) {
 
   const loggedInUser = useSelector((state) => state.auth.user);
   const isLiked = likes.some((like) => loggedInUser?._id === like.user);
+
+  const handleUpdateLikes = () => {
+    if ((type === "My Posts")) {
+      dispatch(updateMyLikes(_id));
+    } else if ((type === "User Posts")) {
+      dispatch(updateUserLikes(_id));
+    } else {
+      dispatch(updateLikes(_id));
+    }
+  };
 
   return (
     <div className="post-card">
@@ -141,7 +152,7 @@ function PostCard({ post }) {
         <span className="action-items">
           {isLiked ? (
             <FavoriteOutlined
-              onClick={() => dispatch(updateLikes(_id))}
+              onClick={handleUpdateLikes}
               sx={{
                 width: "2em",
                 cursor: "pointer",
@@ -153,7 +164,7 @@ function PostCard({ post }) {
             />
           ) : (
             <FavoriteBorderOutlined
-              onClick={() => dispatch(updateLikes(_id))}
+              onClick={handleUpdateLikes}
               sx={{
                 width: "2em",
                 cursor: "pointer",

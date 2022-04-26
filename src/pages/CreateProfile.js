@@ -23,8 +23,6 @@ const initialValues = {
 };
 
 const profileSchema = Yup.object().shape({
-  // email: Yup.string().email().required("Required!"),
-  // location: Yup.string().required("Required!"),
   address: Yup.string().required("Required!"),
   bio: Yup.string(),
   profile_pic: Yup.string()
@@ -45,13 +43,15 @@ export default function CreateProfile() {
 
   const [createProfileData, setCreateProfileData] = useState(initialValues);
 
-  console.log(profile, "profile");
-
   const handleCreateProfile = (values, { setSubmitting }) => {
     dispatch(updateMyProfile(values));
   };
 
-  
+
+
+  if(profile !== null) {
+    return <Navigate to="/profile" />
+  }
 
   return user === null ? null : (
     <div className="edit-profile-container">

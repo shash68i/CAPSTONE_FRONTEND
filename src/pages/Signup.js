@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import FormImage from "../assets/images/form_image.jpg";
 import { authActions, loadUser, registerUser } from "../slices/authSlice";
 import "./LoginSignup.css";
+import { getMyProfile } from "../slices/userSlice";
 
 const initialValues = {
   first_name: "",
@@ -45,8 +46,14 @@ function Signup() {
 
   const handleRegister = (values, { setSubmitting }) => {
     dispatch(registerUser(values));
-    dispatch(loadUser());
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(loadUser());
+      dispatch(getMyProfile());
+    }
+  }, [isAuth]);
 
   if (isAuth) {
     return <Navigate to="/" />;

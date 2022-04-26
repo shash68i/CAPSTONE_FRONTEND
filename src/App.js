@@ -20,6 +20,7 @@ import CreateProfile from "./pages/CreateProfile";
 import UserProfile from "./pages/UserProfile";
 
 import "react-toastify/dist/ReactToastify.css";
+import { getMyProfile } from "./slices/userSlice";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
@@ -35,6 +36,7 @@ function App() {
     // try to fetch a user, if no token or invalid token we
     // will get a 401 response from our API
     dispatch(loadUser());
+    dispatch(getMyProfile());
 
     // log user out from all tabs if they log out in one tab
     // window.addEventListener("storage", () => {

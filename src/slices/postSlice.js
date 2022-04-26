@@ -22,6 +22,14 @@ export const getPost = createAsyncThunk("post/getPost", async (id) => {
   return response.data;
 });
 
+export const getPostsByLocation = createAsyncThunk(
+  "post/getPostsByLocation",
+  async (location) => {
+    const response = await api.get(`/posts/location/${location}`);
+    return response.data;
+  }
+);
+
 export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
   console.log(postData, "postData");
   const response = await api.post("/posts", postData);
@@ -93,6 +101,11 @@ const postSlice = createSlice({
       state.post = { ...state.post, comments: payload };
       state.loading = false;
       console.log(state.post, "comments post");
+    },
+    [getPostsByLocation.fulfilled]: (state, { payload }) => {
+      state.posts = payload;
+      state.loading = false;
+      state.fetched = false;
     },
   },
 });

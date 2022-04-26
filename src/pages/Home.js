@@ -18,11 +18,6 @@ export default function Home() {
   const filteredPosts = useSelector((state) => state.post.filteredPosts);
   const loading = useSelector((state) => state.post.loading);
 
-  // useEffect(() => {
-  //   dispatch(getPosts(1));
-  //   // setTimeout(dispatch(getPosts()), 1000);
-  // }, []);
-
   let bottomBoundaryRef = useRef(null);
   useFetch(page, dispatch);
   useLazyLoading(".card-img-top", posts);

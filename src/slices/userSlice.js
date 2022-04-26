@@ -4,7 +4,6 @@ import api from "../utils/api";
 const initialUserState = {
   myProfile: null,
   myPosts: [],
-  isProfileCreated: false,
   userProfile: {},
   userPosts: [],
   usersProfile: [],
@@ -46,6 +45,22 @@ export const getUserProfile = createAsyncThunk(
   }
 );
 
+export const updateMyLikes = createAsyncThunk(
+  "posts/updateMyLikes",
+  async (postId) => {
+    const response = await api.put(`/posts/like-unlike/${postId}`);
+    return { id: postId, data: response.data };
+  }
+);
+
+export const updateUserLikes = createAsyncThunk(
+  "posts/updateUserLikes",
+  async (postId) => {
+    const response = await api.put(`/posts/like-unlike/${postId}`);
+    return { id: postId, data: response.data };
+  }
+);
+
 // export const getAllProfiles = createAsyncThunk("auth/getAllProfiles", async (state, postData) => {
 //   const response = await api.post("/profile");
 //   return response.data;
@@ -59,13 +74,6 @@ const userSlice = createSlice({
     [getMyProfile.fulfilled]: (state, { payload }) => {
       state.myProfile = payload;
       state.loading = false;
-      state.isProfileCreated = true;
-      console.log(payload, "my profile");
-    },
-    [getMyProfile.rejected]: (state, { payload }) => {
-      state.loading = false;
-      state.profile = null;
-      state.isProfileCreated = false;
       console.log(payload, "my profile");
     },
     [getUserProfile.fulfilled]: (state, { payload }) => {
@@ -88,6 +96,26 @@ const userSlice = createSlice({
       state.userPosts = payload;
       state.loading = false;
       console.log(payload, "created post");
+    },
+    [updateMyLikes.fulfilled]: (state, { payload }) => {
+      state.myPosts = [
+        ...state.myPosts.map((post) => {
+          return post._id === payload.id
+            ? { ...post, likes: [...payload.data] }
+            : post;
+        }),
+      ];
+      state.loading = false;
+    },
+    [updateUserLikes.fulfilled]: (state, { payload }) => {
+      state.userPosts = [
+        ...state.userPosts.map((post) => {
+          return post._id === payload.id
+            ? { ...post, likes: [...payload.data] }
+            : post;
+        }),
+      ];
+      state.loading = false;
     },
   },
 });

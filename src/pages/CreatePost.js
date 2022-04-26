@@ -13,6 +13,7 @@ import "./CreatePost.css";
 import FormikSelect from "../components/FormikSelect";
 import { addPost } from "../slices/postSlice";
 import { useDispatch } from "react-redux";
+import { allLocationOptions, allLocations, locationsGroup } from "../location";
 
 const creatableCustomStyles = {
   container: (provided, state) => ({
@@ -104,10 +105,9 @@ export default function AddPost({ handleClose }) {
   const dispatch = useDispatch();
   const [postData, setPostData] = useState(initialValues);
 
+
   const handleChange = () => {
     console.log("Submitted Details");
-
-    console.log("action");
   };
   const handlePostSubmit = (values) => {
     setPostData(values);
@@ -127,7 +127,6 @@ export default function AddPost({ handleClose }) {
             enableReinitialize={true}
             validateOnBlur={false}
             onSubmit={handlePostSubmit}
-
           >
             <Form className="add-post-fields">
               <div className="edit-form-heading">Create Post</div>
@@ -164,9 +163,10 @@ export default function AddPost({ handleClose }) {
 
               <div className="edit-group">
                 <Field
-                  type="text"
                   name="location"
-                  id="location"
+                  component={FormikSelect}
+                  selectStyle="Normal Select"
+                  options={allLocationOptions}
                   placeholder="Location"
                 />
                 <ErrorMessage component="div" name="location" />
@@ -178,7 +178,6 @@ export default function AddPost({ handleClose }) {
                   components={{ DropdownIndicator: () => null }}
                   placeholder="Add Images"
                   component={FormikSelect}
-                  extra="Hi"
                 />
                 <ErrorMessage component="div" name="images" />
               </div>

@@ -76,7 +76,7 @@ const UserProfile = () => {
         </div>
 
         {posts.length > 0 && posts.map((post) => (
-          <PostCard post={post} key={post._id}/>
+          <PostCard post={post} key={post._id} type="User Posts"/>
         ))}
       </div>
     )

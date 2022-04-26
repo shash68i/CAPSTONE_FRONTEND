@@ -8,6 +8,8 @@ import { Dialog, DialogTitle, Paper } from "@mui/material";
 import CreatePost from "../../pages/CreatePost";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../slices/authSlice";
+import SearchSelect from "../SearchSelect";
+import { allLocationOptions } from "../../location";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -27,10 +29,10 @@ export default function Navbar() {
           {" "}
           <span className="logo">Koya</span>
         </NavLink>
-        <input
-          className="search"
-          type="text"
+        <SearchSelect
+          name="Search"
           placeholder="Search (Location/Tags)"
+          options={allLocationOptions}
         />
         <div className="nav-side">
           <div className="create-post" onClick={handleClickOpen}>
@@ -46,7 +48,10 @@ export default function Navbar() {
           </NavLink>
 
           <NavLink to="/login">
-            <div className="sign-out" onClick={() => dispatch(authActions.logout())}>
+            <div
+              className="sign-out"
+              onClick={() => dispatch(authActions.logout())}
+            >
               <LogoutRoundedIcon
                 sx={{ fontSize: "2.8rem", color: "#4d4d4d" }}
               />
@@ -61,7 +66,7 @@ export default function Navbar() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <Paper sx={{width: "50rem"}}>
+        <Paper sx={{ width: "50rem" }}>
           <CreatePost handleClose={handleClose} />
         </Paper>
       </Dialog>

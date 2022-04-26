@@ -11,7 +11,7 @@ import {
 import "./Profile.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getMyPosts, getMyProfile} from "../slices/userSlice";
+import { getMyPosts } from "../slices/userSlice";
 
 import PostCard from "../components/PostCard/PostCard";
 
@@ -23,57 +23,56 @@ export default function Profile() {
   const posts = useSelector((state) => state.user.myPosts);
   const loading = useSelector((state) => state.user.loading);
 
-  
-
   useEffect(() => {
-    if (user) {
-      dispatch(getMyProfile());
-      dispatch(getMyPosts(user));
-    }
+    dispatch(getMyPosts(user));
+    console.log(posts, "user");
   }, []);
 
-  useEffect(() => {
-    if(profile=== null) {
-      return <Navigate to="/create-profile" />
-    }
-    
-  }, [profile])
+  if (profile === null) {
+    return <Navigate to="/create-profile" />;
+  }
 
+  return (
+    profile && (
+      <div className="profile-page">
+        <div className="profile-card">
+          <div className="profile-card-left">
+            <span className="profile-large-pic">
+              <img src={profile.profile_pic} alt="Profile Pic" />
+            </span>
+          </div>
 
-  
+          <div className="profile-card-right">
+            <span className="profile__name">
+              {user.first_name} {user.last_name}
+            </span>
+            <span className="profile__username">@{user.username} </span>
+            <span className="profile__socials">
+              <EmailOutlined className="email" sx={{ fontSize: "2rem" }} />
+              <FmdGoodOutlined className="address" sx={{ fontSize: "2rem" }} />
+              <Twitter className="twitter" sx={{ fontSize: "2rem" }} />
+              <FacebookOutlined
+                className="facebook"
+                sx={{ fontSize: "2rem" }}
+              />
+              <Instagram className="instagram" sx={{ fontSize: "2rem" }} />
+            </span>
 
-  return profile && (
-    <div className="profile-page">
-      <div className="profile-card">
-        <div className="profile-card-left">
-          <span className="profile-large-pic">
-            <img src={profile.profile_pic} alt="Profile Pic" />
-          </span>
+            <span className="profile__bio">
+              <br />
+              {profile.bio}
+            </span>
+
+            <NavLink to="/edit-profile" className="profile-edit">
+              <button className="edit-profile-btn">Edit Profile</button>
+            </NavLink>
+          </div>
         </div>
 
-        <div className="profile-card-right">
-          <span className="profile__name">{user.first_name} {user.last_name}</span>
-          <span className="profile__username">@{user.username} </span>
-          <span className="profile__socials">
-            <EmailOutlined className="email" sx={{ fontSize: "2rem" }} />
-            <FmdGoodOutlined className="address" sx={{ fontSize: "2rem" }} />
-            <Twitter className="twitter" sx={{ fontSize: "2rem" }} />
-            <FacebookOutlined className="facebook" sx={{ fontSize: "2rem" }} />
-            <Instagram className="instagram" sx={{ fontSize: "2rem" }} />
-          </span>
-
-          <span className="profile__bio">
-            <br />
-            {profile.bio}
-          </span>
-
-          <NavLink to="/edit-profile" className="profile-edit">
-            <button className="edit-profile-btn">Edit Profile</button>
-          </NavLink>
-        </div>
+        {posts.map((post) => (
+          <PostCard post={post} key={post._id} type="My Posts"/>
+        ))}
       </div>
-
-      {posts.map((post) => <PostCard post={post} key={post._id}/>)}
-    </div>
+    )
   );
 }

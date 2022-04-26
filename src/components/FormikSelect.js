@@ -2,6 +2,7 @@ import { ActionTypes } from "@mui/base";
 import { useField } from "formik";
 import { useState } from "react";
 import CreatableSelect from "react-select/creatable";
+import Select from "react-select";
 
 const creatableCustomStyles = {
   container: (provided, state) => ({
@@ -48,7 +49,18 @@ export default function FormikSelect(props) {
     setTouched(true);
     setError(undefined);
   };
-  return (
+  return props.selectStyle === "Normal Select" ? (
+    <Select
+      styles={creatableCustomStyles}
+      isMulti={false}
+      placeholder={props.placeholder}
+      name={props.field.name}
+      onBlur={props.field.onBlur}
+      onChange={(selectedOption) => setValue(selectedOption.value)}
+      options={options}
+      {...props}
+    />
+  ) : (
     <CreatableSelect
       styles={creatableCustomStyles}
       isMulti
@@ -58,6 +70,7 @@ export default function FormikSelect(props) {
       onChange={(selectedOption, ActionTypes) =>
         setFieldProps(selectedOption, ActionTypes)
       }
+      isClearable={false}
       options={options}
       {...props}
     />

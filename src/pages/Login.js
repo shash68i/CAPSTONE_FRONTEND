@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import FormImage from "../assets/images/form_image.jpg";
 import { authActions, loadUser, loginUser } from "../slices/authSlice";
 import "./LoginSignup.css";
+import { getMyProfile } from "../slices/userSlice";
 
 const initialValues = {
   email: "",
@@ -30,16 +31,19 @@ function Login() {
   const [loginData, setLoginData] = useState(initialValues);
 
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
-  const token = useSelector((state) => state.auth.token);
 
   const handleLogin = (values, { setSubmitting }) => {
     setSubmitting(false);
     console.log("Submitted Details", loginData);
     dispatch(loginUser(JSON.stringify(values)));
-    dispatch(loadUser());
-
-    console.log();
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(loadUser());
+      dispatch(getMyProfile());
+    }
+  }, [isAuth]);
 
   if (isAuth) {
     return <Navigate to="/" />;
