@@ -54,6 +54,9 @@ const authSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = true;
     },
+    [registerUser.rejected]: (state, payload ) => {
+      toast.error("User Already Exists");
+    },
     [loginUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.isAuthenticated = true;

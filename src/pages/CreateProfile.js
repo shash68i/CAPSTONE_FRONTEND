@@ -12,8 +12,6 @@ import { updateMyProfile } from "../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const initialValues = {
-  // email: "",
-  // location: "",
   bio: "",
   profile_pic: "",
   address: "",

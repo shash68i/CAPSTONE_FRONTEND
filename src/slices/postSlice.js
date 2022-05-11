@@ -75,7 +75,7 @@ const postSlice = createSlice({
     [getPosts.fulfilled]: (state, { payload }) => {
       state.posts = state.posts.concat(payload);
       state.loading = false;
-      state.fetched = false;
+      // state.fetched = false;
     },
     [getPost.fulfilled]: (state, { payload }) => {
       state.post = payload;
@@ -101,6 +101,9 @@ const postSlice = createSlice({
       state.post = { ...state.post, comments: payload };
       state.loading = false;
       console.log(state.post, "comments post");
+    },
+    [getPostsByLocation.pending]: (state, { payload }) => {
+      state.loading = true;
     },
     [getPostsByLocation.fulfilled]: (state, { payload }) => {
       state.posts = payload;

@@ -26,6 +26,7 @@ function PostCard({ post, type }) {
     tags,
     text,
     images,
+    profile_pic,
     likes,
     date,
     user,
@@ -40,9 +41,9 @@ function PostCard({ post, type }) {
   const isLiked = likes.some((like) => loggedInUser?._id === like.user);
 
   const handleUpdateLikes = () => {
-    if ((type === "My Posts")) {
+    if (type === "My Posts") {
       dispatch(updateMyLikes(_id));
-    } else if ((type === "User Posts")) {
+    } else if (type === "User Posts") {
       dispatch(updateUserLikes(_id));
     } else {
       dispatch(updateLikes(_id));
@@ -53,8 +54,13 @@ function PostCard({ post, type }) {
     <div className="post-card">
       <div className="post-card__title">
         <div className="profile-pic">
-          <img src="https://picsum.photos/200/300" alt="Profile Pic" />
-          {/* <AccountCircleTwoTone sx={{ fontSize: "4.5rem", color: "#4d4d4d" }} /> */}
+          {profile_pic ? (
+            <img src={profile_pic} alt="Profile Pic" />
+          ) : (
+            <AccountCircleTwoTone
+              sx={{ fontSize: "4.5rem", color: "#4d4d4d" }}
+            />
+          )}
         </div>
 
         <div className="user-info__group">

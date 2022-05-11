@@ -8,8 +8,12 @@ const PrivateRoute = ({ component: Component }) => {
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const loading = useSelector((state) => state.auth.loading);
 
-  if(loading) {
-    return <CircularProgress />
+  if (loading) {
+    return (
+      <div className="circular-progress">
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (isAuth) {

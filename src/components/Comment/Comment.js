@@ -9,7 +9,7 @@ import {
 import "./Comment.css";
 
 const Comment = ({ comment }) => {
-  const { username, first_name, last_name, user_profile_img, text, date } =
+  const { username, first_name, last_name, profile_pic, text, date } =
     comment;
   const timestamp = new Date(date);
 
@@ -17,7 +17,7 @@ const Comment = ({ comment }) => {
     <div className="comment-card">
       <div className="comment__title">
         <span className="comment__profile-pic">
-          <img src="https://picsum.photos/200/300" alt="Profile Pic" />
+          <img src={profile_pic} alt="Profile Pic" />
         </span>
         <span className="comment__name">
           {first_name} {last_name}

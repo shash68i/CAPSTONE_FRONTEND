@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Dialog, Paper } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -28,10 +28,13 @@ export default function Home() {
     .reduce(function (acc, curr) {
       if (!acc.includes(curr)) acc.push(curr);
       return acc;
-    }, []
-  );
+    }, []);
 
-  return (
+  return loading ? (
+    <div className="circular-progress">
+      <CircularProgress />
+    </div>
+  ) : (
     <div className="container posts-container">
       <div className="card-section">
         {filteredPosts
@@ -40,7 +43,7 @@ export default function Home() {
               <PostCard className="card-image-top" post={post} key={post._id} />
             ))}
 
-        {!fetched && <CircularProgress />}
+        {<CircularProgress />}
         <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
       </div>
 

@@ -3,6 +3,7 @@ import React, { Fragment, useState } from "react";
 import {
   FavoriteBorderOutlined,
   ModeCommentOutlined,
+  AccountCircleTwoTone,
   SendRounded,
 } from "@mui/icons-material";
 
@@ -12,14 +13,14 @@ import "./Comments.css";
 import { addComment } from "../../slices/postSlice";
 import { useDispatch } from "react-redux";
 
-const Comments = ({ comments, postId }) => {
+const Comments = ({ comments, postId, profile_pic }) => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
 
   const handleAddComment = (e) => {
     e.preventDefault();
     const commentData = { text };
-    dispatch(addComment({postId, commentData}));
+    dispatch(addComment({ postId, commentData }));
     setText("");
   };
 
@@ -27,8 +28,13 @@ const Comments = ({ comments, postId }) => {
     <div className="comments-card">
       <form className="post-comment-form" onSubmit={handleAddComment}>
         <span className="profile-pic">
-          <img src="https://picsum.photos/200/300" alt="Profile Pic" />
-          {/* <AccountCircleTwoTone sx={{ fontSize: "4.5rem", color: "#4d4d4d" }} /> */}
+          {profile_pic ? (
+            <img src={profile_pic} alt="Profile Pic" />
+          ) : (
+            <AccountCircleTwoTone
+              sx={{ fontSize: "3rem", color: "#4d4d4d" }}
+            />
+          )}
         </span>
         <textarea
           className="post-comment-input"

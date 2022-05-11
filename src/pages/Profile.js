@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { NavLink, Navigate } from "react-router-dom";
 import {
+  AccountCircleTwoTone,
   EmailOutlined,
   FacebookOutlined,
   FmdGoodOutlined,
@@ -38,7 +39,13 @@ export default function Profile() {
         <div className="profile-card">
           <div className="profile-card-left">
             <span className="profile-large-pic">
-              <img src={profile.profile_pic} alt="Profile Pic" />
+              {profile.profile_pic ? (
+                <img src={profile.profile_pic} alt="Profile Pic" />
+              ) : (
+                <AccountCircleTwoTone
+                  sx={{ fontSize: "4.5rem", color: "#4d4d4d" }}
+                />
+              )}
             </span>
           </div>
 
@@ -70,7 +77,7 @@ export default function Profile() {
         </div>
 
         {posts.map((post) => (
-          <PostCard post={post} key={post._id} type="My Posts"/>
+          <PostCard post={post} key={post._id} type="My Posts" />
         ))}
       </div>
     )

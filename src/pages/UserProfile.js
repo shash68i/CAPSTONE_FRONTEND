@@ -4,6 +4,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useParams } from "react-router";
 
 import {
+  AccountCircleTwoTone,
   EmailOutlined,
   FacebookOutlined,
   FmdGoodOutlined,
@@ -27,7 +28,6 @@ const UserProfile = () => {
   const profile = useSelector((state) => state.user.userProfile);
   const posts = useSelector((state) => state.user.userPosts);
 
-
   useEffect(() => {
     dispatch(getUserProfile(id));
     dispatch(getUserPosts(id));
@@ -39,7 +39,13 @@ const UserProfile = () => {
         <div className="profile-card">
           <div className="profile-card-left">
             <span className="profile-large-pic">
-              <img src={profile.profile_pic} alt="Profile Pic" />
+              {profile.profile_pic ? (
+                <img src={profile.profile_pic} alt="Profile Pic" />
+              ) : (
+                <AccountCircleTwoTone
+                  sx={{ fontSize: "4.5rem", color: "#4d4d4d" }}
+                />
+              )}
             </span>
           </div>
 
@@ -75,9 +81,10 @@ const UserProfile = () => {
         </div> */}
         </div>
 
-        {posts.length > 0 && posts.map((post) => (
-          <PostCard post={post} key={post._id} type="User Posts"/>
-        ))}
+        {posts.length > 0 &&
+          posts.map((post) => (
+            <PostCard post={post} key={post._id} type="User Posts" />
+          ))}
       </div>
     )
   );

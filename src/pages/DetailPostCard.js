@@ -31,14 +31,12 @@ function DetailPostCard() {
 
   // const timestamp = new Date(post.date);
   const getNearbyLocations = () => {
-    console.log(post, "post")
     if (post._id) {
       return locationsGroup
         .find((locationGroup) => locationGroup.includes(post.location))
         ?.filter((location) => location !== post.location);
     }
   };
-
 
   useEffect(() => {
     dispatch(getPost(id));
@@ -50,8 +48,13 @@ function DetailPostCard() {
         <div className="detail-post-card">
           <div className="post-card__title">
             <div className="profile-pic">
-              <img src="https://picsum.photos/200/300" alt="Profile Pic" />
-              {/* <AccountCircleTwoTone sx={{ fontSize: "4.5rem", color: "#4d4d4d" }} /> */}
+              {post.profile_pic ? (
+                <img src={post.profile_pic} alt="Profile Pic" />
+              ) : (
+                <AccountCircleTwoTone
+                  sx={{ fontSize: "4.5rem", color: "#4d4d4d" }}
+                />
+              )}
             </div>
 
             <div className="user-info__group">
@@ -166,7 +169,7 @@ function DetailPostCard() {
           </div>
         </div>
 
-        <Comments comments={post.comments} postId={id} />
+        <Comments comments={post.comments} postId={id} profile_pic={post.profile_pic} />
         <div className="nearby-location-section">
           <NearbyLocation locationOptions={getNearbyLocations()} />
         </div>
