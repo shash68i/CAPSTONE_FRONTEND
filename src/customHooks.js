@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
-import { getPosts, postActions, updateLikes } from "./slices/postSlice";
+import { getPosts, postActions, updateLikes } from "./core/slices/postSlice";
 
 // make API calls and pass the returned data via dispatch
 export const useFetch = (page, dispatch) => {

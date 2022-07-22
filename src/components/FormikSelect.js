@@ -30,31 +30,45 @@ const creatableCustomStyles = {
   input: (provided, state) => ({
     ...provided,
   }),
-  indicatorsContainer: (styles) => ({
-    ...styles,
-    paddingTop: 7,
-    paddingBottom: 7,
+  menuList: (provided) => ({
+    ...provided,
+    maxHeight: "15rem",
   }),
 };
 
 export default function FormikSelect(props) {
   const [options, setOptions] = useState([]);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const [field, meta, helpers] = useField(props.field.name); // can pass 'props' into useField also, if 'props' contains a name attribute
-  const { setValue, setTouched, setError } = helpers;
+  const { value, setValue, setTouched, setError } = helpers;
 
+  const createOption = (label) => ({ label, value: label });
+  
   const setFieldProps = (selectedOption, ActionTypes) => {
-    setOptions([...options, ActionTypes.option]);
-    setValue([...props.field.value, ActionTypes.option.value]);
+    if (ActionTypes.action === "create-option") {
+      setOptions([...options, createOption(ActionTypes.option.value)]);
+      setValue([...props.field.value, ActionTypes.option.value]);
+    } else {
+      setValue(selectedOption.map((option) => option.value));
+    }
     setTouched(true);
     setError(undefined);
   };
+
+  const openMenu = () => {
+    setMenuIsOpen(true);
+  };
+  const closeMenu = () => {
+    setMenuIsOpen(false);
+  };
+
   return props.selectStyle === "Normal Select" ? (
     <Select
       styles={creatableCustomStyles}
       isMulti={false}
       placeholder={props.placeholder}
-      name={props.field.name}
+      name={field.name}
       onBlur={props.field.onBlur}
       onChange={(selectedOption) => setValue(selectedOption.value)}
       options={options}
@@ -63,16 +77,40 @@ export default function FormikSelect(props) {
   ) : (
     <CreatableSelect
       styles={creatableCustomStyles}
+      backspaceRemovesValue={true}
       isMulti
+      blurInputOnSelect={props.field.onBlur}
       placeholder={props.placeholder}
       name={props.field.name}
-      onBlur={props.field.onBlur}
-      onChange={(selectedOption, ActionTypes) =>
-        setFieldProps(selectedOption, ActionTypes)
-      }
+      onFocus={openMenu}
+      onBlur={field.onBlur}
+      // menuIsOpen={menuIsOpen}
+      onChange={(selectedOption, ActionTypes) => {
+        setFieldProps(selectedOption, ActionTypes);
+      }}
       isClearable={false}
       options={options}
       {...props}
     />
   );
 }
+
+{
+  /* <CreatableSelect */
+}
+//   styles={creatableCustomStyles}
+//   isMulti
+//   placeholder={props.placeholder}
+//   openMenuOnFocus={true}
+//   name={props.field.name}
+//   onBlur={props.field.blur}
+//   onCreateOption={closeMenu}
+//   onChange={(selectedOption, ActionTypes) => {
+//     setFieldProps(selectedOption, ActionTypes);
+//   }}
+//   onInputChange={openMenu}
+//   menuIsOpen={menuIsOpen}
+//   isClearable={false}
+//   options={options}
+//   {...props}
+// />

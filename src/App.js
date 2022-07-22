@@ -2,12 +2,12 @@ import React, { Fragment, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import "./App.css";
 import Login from "./pages/Login";
 
-import Navbar from "./components/Navigation/Navbar";
+// import Navbar from "./components/Navigation/Navbar";
+import Home from "./pages/Home/Home";
 import DetailPostCard from "./pages/DetailPostCard";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
@@ -15,12 +15,13 @@ import CreatePost from "./pages/CreatePost";
 import PrivateRoute from "./components/Route/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import setAuthToken from "./utils/setAuthToken";
-import { authActions, loadUser } from "./slices/authSlice";
+import { authActions, loadUser } from "./core/slices/authSlice";
 import CreateProfile from "./pages/CreateProfile";
 import UserProfile from "./pages/UserProfile";
 
 import "react-toastify/dist/ReactToastify.css";
-import { getMyProfile } from "./slices/userSlice";
+import { getMyProfile } from "./core/slices/userSlice";
+import { LocationPosts } from "./components";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
@@ -47,20 +48,21 @@ function App() {
   return (
     <Fragment>
       <ToastContainer
+        bodyClassName="toast-text"
+        toastClassName="toast-container"
         position="top-right"
         autoClose={5000}
         hideProgressBar
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        theme="colored"
         pauseOnFocusLoss
         draggable
         pauseOnHover
       />
 
       <Routes>
-        {/* Unauthorized Routes */}
+        {/* Public Routes */}
         <Route path="register" element={<Signup />} />
         <Route path="login" element={<Login />} />
 
@@ -69,10 +71,7 @@ function App() {
 
         <Route path="profile" element={<PrivateRoute component={Profile} />} />
 
-        <Route
-          path="create-profile"
-          element={<PrivateRoute component={CreateProfile} />}
-        />
+        <Route path="/create-profile" element={<CreateProfile />} />
 
         <Route
           path="edit-profile"
@@ -91,6 +90,10 @@ function App() {
         <Route
           path="users/:id"
           element={<PrivateRoute component={UserProfile} />}
+        />
+        <Route
+          path="posts/location/:location"
+          element={<PrivateRoute component={LocationPosts} />}
         />
       </Routes>
     </Fragment>

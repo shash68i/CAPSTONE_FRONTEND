@@ -1,10 +1,10 @@
 import { ActionTypes } from "@mui/base";
 import { useField } from "formik";
 import { useState } from "react";
-import CreatableSelect from "react-select/creatable";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import { useDispatch } from "react-redux";
-import { getPostsByLocation } from "../slices/postSlice";
+import { getPostsByLocation } from "../core/slices/postSlice";
+import { Search } from "@mui/icons-material";
 
 const creatableCustomStyles = {
   control: (provided, state) => ({
@@ -21,15 +21,15 @@ const creatableCustomStyles = {
   }),
   menu: (provided, state) => ({
     ...provided,
-    zIndex: "20"
+    zIndex: "20",
   }),
   option: (provided, state) => ({
     ...provided,
     fontSize: "1.5rem",
-    borderBottom: "1px solid rgb(239, 243, 244)"
+    borderBottom: "1px solid rgb(239, 243, 244)",
   }),
   placeholder: (provided, state) => ({
-      ...provided,
+    ...provided,
     fontFamily: `"Inter", cursive`,
     fontSize: "1.5rem",
     opacity: "0.5",
@@ -39,24 +39,35 @@ const creatableCustomStyles = {
   }),
 };
 
+const DropdownIndicator = (props) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <Search sx={{ fontSize: "2.2rem" }} />
+    </components.DropdownIndicator>
+  );
+};
+
 export default function SearchSelect(props) {
   const dispatch = useDispatch();
 
-//   const [field, meta, helpers] = useField(props.field.name); // can pass 'props' into useField also, if 'props' contains a name attribute
-//   const { setValue, setTouched, setError } = helpers;
+  //   const [field, meta, helpers] = useField(props.field.name); // can pass 'props' into useField also, if 'props' contains a name attribute
+  //   const { setValue, setTouched, setError } = helpers;
 
-//   const setFieldProps = (selectedOption, ActionTypes) => {
-//     setOptions([...options, ActionTypes.option]);
-//     setValue([...props.field.value, ActionTypes.option.value]);
-//     setTouched(true);
-//     setError(undefined);
-//   };
+  //   const setFieldProps = (selectedOption, ActionTypes) => {
+  //     setOptions([...options, ActionTypes.option]);
+  //     setValue([...props.field.value, ActionTypes.option.value]);
+  //     setTouched(true);
+  //     setError(undefined);
+  //   };
   return (
     <Select
       styles={creatableCustomStyles}
+      components={{ DropdownIndicator }}
       isMulti={false}
       placeholder={props.placeholder}
-      onChange={(selectedOption) => dispatch(getPostsByLocation(selectedOption.value))}
+      onChange={(selectedOption) =>
+        dispatch(getPostsByLocation(selectedOption.value))
+      }
       {...props}
     />
   );

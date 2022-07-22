@@ -20,7 +20,7 @@ export const locationsGroup = [
     "Dharamsala, Himachal Pradesh",
     "Dalhousie, Himachal Pradesh",
     "Kasauli, Himachal Pradesh",
-    "Bir-Billing (best for paragliding), Himachal Pradesh",
+    "Bir-Billing, Himachal Pradesh",
     "Parashar Lake, Himachal Pradesh",
     "Kangra, Himachal Pradesh",
   ],

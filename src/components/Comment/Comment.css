@@ -1,8 +1,15 @@
+.comment-card-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
 .comment-card {
   width: 100%;
   border-bottom: 1px solid rgb(239, 243, 244);
-  padding: 1rem 0;
-  margin: 1rem 0;
+  padding: 1rem;
   background-color: #f7f9f9;
   border-radius: 1rem;
 }
